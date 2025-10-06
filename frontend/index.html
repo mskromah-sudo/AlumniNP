@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Portal - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Alumni Portal</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="alumni-directory.html" class="nav-link">Directory</a></li>
+                <li><a href="job-board.html" class="nav-link">Jobs</a></li>
+                <li><a href="events.html" class="nav-link">Events</a></li>
+                <li><a href="mentorship.html" class="nav-link">Mentorship</a></li>
+                <li id="adminLink" style="display:none;"><a href="admin.html" class="nav-link">Admin</a></li>
+                <li id="loginBtn"><a href="#" class="nav-link btn-login">Login</a></li>
+                <li id="logoutBtn" style="display:none;"><a href="#" class="nav-link btn-logout">Logout</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Alumni Portal</h1>
+            <p>Connect, Collaborate, and Grow with Your Alumni Network</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" id="registerBtn">Join Now</button>
+                <button class="btn btn-secondary" id="learnMoreBtn">Learn More</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password:</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+            </div>
+        </div>
+
+        <!-- Registration Modal -->
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Register</h2>
+                <form id="registerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email:</label>
+                        <input type="email" id="regEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password:</label>
+                        <input type="password" id="regPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">I am a:</label>
+                        <select id="role" required>
+                            <option value="">Select Role</option>
+                            <option value="alumni">Alumni</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="gradYearGroup" style="display:none;">
+                        <label for="graduationYear">Graduation Year:</label>
+                        <input type="number" id="graduationYear" min="1950" max="2024">
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department:</label>
+                        <input type="text" id="department" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <input type="text" id="course" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <p>Already have an account? <a href="#" id="showLogin">Login here</a></p>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Platform Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Alumni Directory</h3>
+                        <p>Connect with fellow alumni from your batch and department</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💼</div>
+                        <h3>Job Board</h3>
+                        <p>Find career opportunities posted by alumni</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3>Events</h3>
+                        <p>Stay updated with reunions, webinars, and meetups</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <h3>Mentorship</h3>
+                        <p>Get guidance from experienced alumni mentors</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="alumniCount">5000+</h3>
+                        <p>Registered Alumni</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="jobCount">200+</h3>
+                        <p>Job Opportunities</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="eventCount">50+</h3>
+                        <p>Events Organized</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="mentorCount">100+</h3>
+                        <p>Active Mentors</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Updates -->
+        <section class="recent-updates">
+            <div class="container">
+                <h2 class="section-title">Recent Updates</h2>
+                <div id="recentUpdates" class="updates-grid">
+                    <!-- Updates will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Alumni Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

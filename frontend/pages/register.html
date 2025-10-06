@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Alumni Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .auth-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+        }
+        
+        .steps-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .step.active .step-number {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+        
+        .step.active .step-title {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .otp-section {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+        
+        .otp-input {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .otp-input input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Join Alumni Network</h2>
+                <p>Create your account and connect with the community</p>
+            </div>
+            
+            <div class="steps-indicator">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Account Type</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Personal Info</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Professional</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Verification</div>
+                </div>
+            </div>
+            
+            <form id="registrationForm">
+                <!-- Step 1: Account Type -->
+                <div class="form-step active" data-step="1">
+                    <div class="form-group">
+                        <label>Register As</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <label class="radio-card">
+                                <input type="radio" name="userType" value="alumni" required>
+                                <div class="radio-card-content">
+                                    <i class="fas fa-user-graduate"></i>
+                                    <span>Alumni</span>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="userType" value="student" required>
+                                <div class="radio-card-content">
+                                    <i class="fas fa-user-graduate"></i>
+                                    <span>Student</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Personal Information -->
+                <div class="form-step" data-step="2">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 234 567 8900" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduationYear">Graduation Year</label>
+                            <select id="graduationYear" name="graduationYear" required>
+                                <option value="">Select Year</option>
+                                <!-- Generate years dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="computer-science">Computer Science</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="business">Business Administration</option>
+                                <option value="arts">Arts & Humanities</option>
+                                <option value="science">Sciences</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="degree">Degree</label>
+                            <input type="text" id="degree" name="degree" placeholder="e.g., B.Tech, MBA" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Professional Information -->
+                <div class="form-step" data-step="3">
+                    <div class="form-group alumni-only">
+                        <label for="company">Current Company</label>
+                        <input type="text" id="company" name="company" placeholder="Company Name">
+                    </div>
+                    
+                    <div class="form-group alumni-only">
+                        <label for="designation">Designation</label>
+                        <input type="text" id="designation" name="designation" placeholder="Your Job Title">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" placeholder="New York">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" name="country" placeholder="United States">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn Profile (Optional)</label>
+                        <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="bio">Brief Bio (Optional)</label>
+                        <textarea id="bio" name="bio" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Verification -->
+                <div class="form-step" data-step="4">
+                    <div class="verification-info">
+                        <p>We've sent a verification code to your email address. Please enter the code below to complete your registration.</p>
+                    </div>
+                    
+                    <div class="otp-section">
+                        <h3>Enter Verification Code</h3>
+                        <div class="otp-input">
+                            <input type="text" maxlength="1" class="otp-digit">
+                            <input type="text" maxlength="1" class="otp-digit">
+                            <input type="text" maxlength="1" class="otp-digit">
+                            <input type="text" maxlength="1" class="otp-digit">
+                            <input type="text" maxlength="1" class="otp-digit">
+                            <input type="text" maxlength="1" class="otp-digit">
+                        </div>
+                        <p>Didn't receive code? <a href="#" id="resendOTP">Resend</a></p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" required>
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-outline" id="prevBtn" style="display: none;">Previous</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">Complete Registration</button>
+                </div>
+            </form>
+            
+            <div class="auth-footer" style="margin-top: 20px; text-align: center;">
+                <p>Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        .radio-card {
+            cursor: pointer;
+        }
+        
+        .radio-card input[type="radio"] {
+            display: none;
+        }
+        
+        .radio-card-content {
+            border: 2px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .radio-card input[type="radio"]:checked + .radio-card-content {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .radio-card-content i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+    
+    <script src="../js/auth.js"></script>
+</body>
+</html>

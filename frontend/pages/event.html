@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Alumni Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .event-card {
+            transition: transform 0.3s;
+        }
+        .event-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .event-date {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">Alumni Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/alumni-directory.html">Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/job-board.html">Jobs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/mentorship.html">Mentorship</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/events.html">Events</a></li>
+                </ul>
+                <div id="user-info" class="ms-3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="alert-container"></div>
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Events</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                <i class="bi bi-calendar-plus"></i> Create Event
+            </button>
+        </div>
+
+        <!-- Event Tabs -->
+        <ul class="nav nav-tabs mb-4" id="eventTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#upcoming-events">Upcoming Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#past-events">Past Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#my-events">My Events</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Upcoming Events -->
+            <div class="tab-pane fade show active" id="upcoming-events">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <select class="form-select" id="event-type-filter">
+                            <option value="">All Event Types</option>
+                            <option value="reunion">Reunion</option>
+                            <option value="webinar">Webinar</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="networking">Networking</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" id="event-location-filter">
+                            <option value="">All Locations</option>
+                            <option value="online">Online</option>
+                            <option value="campus">On Campus</option>
+                            <option value="offsite">Off-site</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row" id="upcoming-events-list">
+                    <!-- Events will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Past Events -->
+            <div class="tab-pane fade" id="past-events">
+                <div class="row" id="past-events-list">
+                    <!-- Past events will be loaded here -->
+                </div>
+            </div>
+
+            <!-- My Events -->
+            <div class="tab-pane fade" id="my-events">
+                <h4>Events I'm Attending</h4>
+                <div class="row mb-4" id="attending-events-list">
+                    <!-- Events will be loaded here -->
+                </div>
+                
+                <h4>Events I've Created</h4>
+                <div class="row" id="created-events-list">
+                    <!-- Events will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div class="modal fade" id="createEventModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="create-event-form">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Event Title</label>
+                                <input type="text" class="form-control" name="title" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Event Type</label>
+                                <select class="form-select" name="type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="reunion">Reunion</option>
+                                    <option value="webinar">Webinar</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="networking">Networking</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" name="date" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" name="time" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Venue Type</label>
+                                <select class="form-select" name="venueType" id="venue-type" required>
+                                    <option value="">Select Venue Type</option>
+                                    <option value="online">Online</option>
+                                    <option value="physical">Physical</option>
+                                    <option value="hybrid">Hybrid</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Venue/Link</label>
+                                <input type="text" class="form-control" name="venue" placeholder="Address or meeting link" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="3" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Registration Deadline</label>
+                                <input type="date" class="form-control" name="deadline" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Maximum Attendees</label>
+                                <input type="number" class="form-control" name="maxAttendees" min="1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="createEvent()">Create Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div class="modal fade" id="eventDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="event-detail-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="event-detail-content">
+                    <!-- Event details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div id="event-action-buttons">
+                        <!-- RSVP buttons will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Load events
+        async function loadEvents() {
+            loadUpcomingEvents();
+            loadPastEvents();
+            loadMyEvents();
+        }
+
+        async function loadUpcomingEvents() {
+            loadData('/api/events/upcoming', 'upcoming-events-list', renderEventCards);
+        }
+
+        async function loadPastEvents() {
+            loadData('/api/events/past', 'past-events-list', renderPastEventCards);
+        }
+
+        async function loadMyEvents() {
+            loadData('/api/events/my-events', 'attending-events-list', renderEventCards);
+            loadData('/api/events/created', 'created-events-list', renderEventCards);
+        }
+
+        function renderEventCards(events, container) {
+            if (events.length === 0) {
+                container.innerHTML = '<div class="col-12"><div class="alert alert-info">No events found</div></div>';
+                return;
+            }
+            
+            events.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'col-md-4 mb-4';
+                eventCard.innerHTML = `
+                    <div class="card event-card h-100" onclick="viewEventDetails('${event._id}')">
+                        <div class="card-body">
+                            <div class="event-date mb-3">
+                                <h3>${new Date(event.date).getDate()}</h3>
+                                <small>${new Date(event.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</small>
+                            </div>
+                            <h5 class="card-title">${event.title}</h5>
+                            <p class="text-muted">
+                                <i class="bi bi-clock"></i> ${event.time}
+                                <span class="ms-2"><i class="bi bi-geo-alt"></i> ${event.venueType === 'online' ? 'Online' : event.venue}</span>
+                            </p>
+                            <p class="card-text">${event.description.substring(0, 100)}...</p>
+                            <div class="d-flex justify-content-between">
+                                <span class="badge bg-primary">${event.type}</span>
+                                <span><i class="bi bi-people"></i> ${event.attendees.length} attending</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(eventCard);
+            });
+        }
+
+        function renderPastEventCards(events, container) {
+            renderEventCards(events, container);
+            // Add gallery links for past events
+            container.querySelectorAll('.event-card').forEach((card, index) => {
+                const galleryBtn = document.createElement('button');
+                galleryBtn.className = 'btn btn-sm btn-outline-primary mt-2';
+                galleryBtn.innerHTML = '<i class="bi bi-images"></i> View Gallery';
+                galleryBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    viewEventGallery(events[index]._id);
+                };
+                card.querySelector('.card-body').appendChild(galleryBtn);
+            });
+        }
+
+        async function viewEventDetails(eventId) {
+            try {
+                const response = await fetch(`/api/events/${eventId}`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const event = await response.json();
+                    document.getElementById('event-detail-title').textContent = event.title;
+                    document.getElementById('event-detail-content').innerHTML = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Date:</strong> ${formatDate(event.date)}</p>
+                                <p><strong>Time:</strong> ${event.time}</p>
+                                <p><strong>Venue:</strong> ${event.venueType === 'online' ? 'Online Event' : event.venue}</p>
+                                ${event.venueType === 'online' ? `<p><strong>Meeting Link:</strong> <a href="${event.venue}" target="_blank">Join Meeting</a></p>` : ''}
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Type:</strong> ${event.type}</p>
+                                <p><strong>Registration Deadline:</strong> ${formatDate(event.deadline)}</p>
+                                <p><strong>Attendees:</strong> ${event.attendees.length}${event.maxAttendees ? `/${event.maxAttendees}` : ''}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h6>Description</h6>
+                        <p>${event.description}</p>
+                        <hr>
+                        <h6>Attendees</h6>
+                        <div class="d-flex flex-wrap">
+                            ${event.attendees.slice(0, 10).map(attendee => `
+                                <span class="badge bg-secondary me-2 mb-2">${attendee.name}</span>
+                            `).join('')}
+                            ${event.attendees.length > 10 ? `<span class="badge bg-info">+${event.attendees.length - 10} more</span>` : ''}
+                        </div>
+                    `;
+                    
+                    // Add RSVP buttons
+                    const actionButtons = document.getElementById('event-action-buttons');
+                    const isAttending = event.attendees.some(a => a._id === currentUser?._id);
+                    
+                    if (new Date(event.date) > new Date()) {
+                        if (isAttending) {
+                            actionButtons.innerHTML = `
+                                <button class="btn btn-danger" onclick="cancelRSVP('${event._id}')">Cancel RSVP</button>
+                            `;
+                        } else {
+                            actionButtons.innerHTML = `
+                                <button class="btn btn-success" onclick="rsvpEvent('${event._id}', 'going')">Going</button>
+                                <button class="btn btn-warning" onclick="rsvpEvent('${event._id}', 'maybe')">Maybe</button>
+                            `;
+                        }
+                    }
+                    
+                    new bootstrap.Modal(document.getElementById('eventDetailsModal')).show();
+                }
+            } catch (error) {
+                showAlert('error', 'Failed to load event details');
+            }
+        }
+
+        async function rsvpEvent(eventId, status) {
+            try {
+                const response = await fetch(`/api/events/${eventId}/rsvp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status }),
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    showAlert('success', 'RSVP successful!');
+                    bootstrap.Modal.getInstance(document.getElementById('eventDetailsModal')).hide();
+                    loadEvents();
+                } else {
+                    showAlert('error', 'Failed to RSVP');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error');
+            }
+        }
+
+        async function cancelRSVP(eventId) {
+            try {
+                const response = await fetch(`/api/events/${eventId}/rsvp`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    showAlert('success', 'RSVP cancelled');
+                    bootstrap.Modal.getInstance(document.getElementById('eventDetailsModal')).hide();
+                    loadEvents();
+                } else {
+                    showAlert('error', 'Failed to cancel RSVP');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error');
+            }
+        }
+
+        async function createEvent() {
+            const form = document.getElementById('create-event-form');
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/api/events', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(formData)),
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    showAlert('success', 'Event created successfully!');
+                    bootstrap.Modal.getInstance(document.getElementById('createEventModal')).hide();
+                    form.reset();
+                    loadEvents();
+                } else {
+                    showAlert('error', 'Failed to create event');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEvents();
+        });
+    </script>
+</body>
+</html>

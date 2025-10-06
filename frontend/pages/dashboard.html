@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Alumni Portal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <span>AlumniPortal</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="alumni-directory.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Alumni Directory</span>
+                </a>
+                <a href="job-board.html" class="nav-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Job Board</span>
+                    <span class="badge">12</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Events</span>
+                </a>
+                <a href="mentorship.html" class="nav-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Mentorship</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>Forums</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                    <span class="badge">3</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Dashboard</h1>
+                </div>
+                
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    
+                    <div class="user-menu">
+                        <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
+                        <div class="user-info">
+                            <span class="user-name">John Doe</span>
+                            <span class="user-role">Alumni</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <div class="welcome-text">
+                        <h2>Welcome back, John! 👋</h2>
+                        <p>Stay connected with your alma mater and fellow alumni</p>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-edit"></i>
+                            Update Profile
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-plus"></i>
+                            Post Job
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(37, 99, 235, 0.1); color: var(--primary-color);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>2,456</h3>
+                            <p>Total Alumni</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>124</h3>
+                            <p>Active Jobs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(251, 146, 60, 0.1); color: #fb923c;">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>8</h3>
+                            <p>Upcoming Events</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>45</h3>
+                            <p>Active Mentors</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Grid -->
+                <div class="dashboard-grid">
+                    <!-- Recent Jobs -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Recent Job Postings</h3>
+                            <a href="job-board.html" class="view-all">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="job-list">
+                                <div class="job-item">
+                                    <div class="job-company-logo">
+                                        <img src="https://via.placeholder.com/50" alt="Company">
+                                    </div>
+                                    <div class="job-details">
+                                        <h4>Senior Software Engineer</h4>
+                                        <p>Tech Corp • San Francisco, CA</p>
+                                        <div class="job-tags">
+                                            <span class="tag">Full-time</span>
+                                            <span class="tag">Remote</span>
+                                        </div>
+                                    </div>
+                                    <div class="job-date">2 days ago</div>
+                                </div>
+                                <div class="job-item">
+                                    <div class="job-company-logo">
+                                        <img src="https://via.placeholder.com/50" alt="Company">
+                                    </div>
+                                    <div class="job-details">
+                                        <h4>Marketing Manager</h4>
+                                        <p>Business Inc • New York, NY</p>
+                                        <div class="job-tags">
+                                            <span class="tag">Full-time</span>
+                                        </div>
+                                    </div>
+                                    <div class="job-date">3 days ago</div>
+                                </div>
+                                <div class="job-item">
+                                    <div class="job-company-logo">
+                                        <img src="https://via.placeholder.com/50" alt="Company">
+                                    </div>
+                                    <div class="job-details">
+                                        <h4>Data Analyst Intern</h4>
+                                        <p>Analytics Pro • Boston, MA</p>
+                                        <div class="job-tags">
+                                            <span class="tag">Internship</span>
+                                        </div>
+                                    </div>
+                                    <div class="job-date">1 week ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Upcoming Events -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Upcoming Events</h3>
+                            <a href="events.html" class="view-all">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="event-list">
+                                <div class="event-item">
+                                    <div class="event-date-badge">
+                                        <span class="day">15</span>
+                                        <span class="month">DEC</span>
+                                    </div>
+                                    <div class="event-info">
+                                        <h4>Annual Alumni Meet 2024</h4>
+                                        <p><i class="fas fa-map-marker-alt"></i> Main Campus</p>
+                                        <p><i class="fas fa-clock"></i> 10:00 AM</p>
+                                        <button class="btn btn-sm btn-primary">RSVP</button>
+                                    </div>
+                                </div>
+                                <div class="event-item">
+                                    <div class="event-date-badge">
+                                        <span class="day">20</span>
+                                        <span class="month">DEC</span>
+                                    </div>
+                                    <div class="event-info">
+                                        <h4>Tech Talk: AI Revolution</h4>
+                                        <p><i class="fas fa-video"></i> Virtual Event</p>
+                                        <p><i class="fas fa-clock"></i> 6:00 PM</p>
+                                        <button class="btn btn-sm btn-outline">Register</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Alumni -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>New Alumni Members</h3>
+                            <a href="alumni-directory.html" class="view-all">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="alumni-list">
+                                <div class="alumni-item">
+                                    <img src="https://via.placeholder.com/40" alt="Alumni" class="alumni-avatar">
+                                    <div class="alumni-info">
+                                        <h4>Sarah Johnson</h4>
+                                        <p>Class of 2022 • Software Engineer at Google</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline">Connect</button>
+                                </div>
+                                <div class="alumni-item">
+                                    <img src="https://via.placeholder.com/40" alt="Alumni" class="alumni-avatar">
+                                    <div class="alumni-info">
+                                        <h4>Michael Chen</h4>
+                                        <p>Class of 2021 • Product Manager at Microsoft</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline">Connect</button>
+                                </div>
+                                <div class="alumni-item">
+                                    <img src="https://via.placeholder.com/40" alt="Alumni" class="alumni-avatar">
+                                    <div class="alumni-info">
+                                        <h4>Emily Davis</h4>
+                                        <p>Class of 2020 • Consultant at McKinsey</p>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline">Connect</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- News & Announcements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>News & Announcements</h3>
+                            <a href="#" class="view-all">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="news-list">
+                                <div class="news-item">
+                                    <span class="news-badge">Important</span>
+                                    <h4>Alumni Database Migration Notice</h4>
+                                    <p>The portal will undergo maintenance on Dec 25th...</p>
+                                    <span class="news-date">2 hours ago</span>
+                                </div>
+                                <div class="news-item">
+                                    <span class="news-badge">Event</span>
+                                    <h4>Registration Open for Annual Reunion</h4>
+                                    <p>Early bird registration is now open for the 2024 reunion...</p>
+                                    <span class="news-date">1 day ago</span>
+                                </div>
+                                <div class="news-item">
+                                    <span class="news-badge">Achievement</span>
+                                    <h4>Alumni Wins National Innovation Award</h4>
+                                    <p>John Smith (Class of 2015) has been recognized...</p>
+                                    <span class="news-date">3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

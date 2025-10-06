@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Directory - Alumni Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .alumni-card {
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .alumni-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+        .filter-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">Alumni Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/alumni-directory.html">Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/job-board.html">Jobs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/mentorship.html">Mentorship</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/events.html">Events</a></li>
+                </ul>
+                <div id="user-info" class="ms-3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="alert-container"></div>
+        
+        <h2 class="mb-4">Alumni Directory</h2>
+        
+        <div class="row">
+            <!-- Filters Section -->
+            <div class="col-md-3">
+                <div class="filter-section">
+                    <h5 class="mb-3">Filters</h5>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Search</label>
+                        <input type="text" class="form-control" id="search-alumni" placeholder="Name, Company, Skills...">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Graduation Year</label>
+                        <select class="form-select" id="filter-year">
+                            <option value="">All Years</option>
+                            <!-- Years will be populated dynamically -->
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Department</label>
+                        <select class="form-select" id="filter-department">
+                            <option value="">All Departments</option>
+                            <option value="computer-science">Computer Science</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="mechanical">Mechanical</option>
+                            <option value="civil">Civil</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Location</label>
+                        <select class="form-select" id="filter-location">
+                            <option value="">All Locations</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="chennai">Chennai</option>
+                            <option value="pune">Pune</option>
+                            <option value="international">International</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Industry</label>
+                        <select class="form-select" id="filter-industry">
+                            <option value="">All Industries</option>
+                            <option value="it">IT/Software</option>
+                            <option value="finance">Finance</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="education">Education</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="consulting">Consulting</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary w-100" onclick="applyFilters()">Apply Filters</button>
+                    <button class="btn btn-outline-secondary w-100 mt-2" onclick="clearFilters()">Clear Filters</button>
+                </div>
+            </div>
+            
+            <!-- Alumni List Section -->
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="mb-0" id="results-count">Showing 0 alumni</p>
+                    <select class="form-select w-auto" id="sort-by">
+                        <option value="name">Sort by Name</option>
+                        <option value="year">Sort by Year</option>
+                        <option value="recent">Recently Joined</option>
+                    </select>
+                </div>
+                
+                <div id="alumni-list">
+                    <!-- Alumni cards will be loaded here -->
+                </div>
+                
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center" id="alumni-pagination">
+                        <!-- Pagination will be generated -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alumni Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Alumni Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="profile-content">
+                    <!-- Profile details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="connect-btn">Connect</button>
+                    <button type="button" class="btn btn-info" id="message-btn">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        let currentPage = 1;
+        let filters = {};
+        
+        // Populate year filter
+        function populateYearFilter() {
+            const yearFilter = document.getElementById('filter-year');
+            const currentYear = new Date().getFullYear();
+            for (let year = currentYear; year >= 1990; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearFilter.appendChild(option);
+            }
+        }
+        
+        // Load alumni
+        async function loadAlumni(page = 1) {
+            const container = document.getElementById('alumni-list');
+            container.innerHTML = '<div class="text-center"><div class="spinner-border"></div></div>';
+            
+            const queryParams = new URLSearchParams({
+                page,
+                ...filters,
+                sort: document.getElementById('sort-by').value
+            });
+            
+            try {
+                const response = await fetch(`/api/users/alumni?${queryParams}`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    renderAlumni(data.alumni);
+                    renderPagination(data.totalPages, page);
+                    document.getElementById('results-count').textContent = `Showing ${data.alumni.length} of ${data.total} alumni`;
+                } else {
+                    container.innerHTML = '<div class="alert alert-danger">Failed to load alumni</div>';
+                }
+            } catch (error) {
+                container.innerHTML = '<div class="alert alert-danger">Network error</div>';
+            }
+        }
+        
+        function renderAlumni(alumni) {
+            const container = document.getElementById('alumni-list');
+            container.innerHTML = '';
+            
+            if (alumni.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">No alumni found matching your criteria</div>';
+                return;
+            }
+            
+            alumni.forEach(alum => {
+                const card = document.createElement('div');
+                card.className = 'card alumni-card mb-3';
+                card.onclick = () => viewProfile(alum._id);
+                card.innerHTML = `
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <img src="${alum.profilePhoto || '/default-avatar.png'}" class="rounded-circle profile-img">
+                            </div>
+                            <div class="col">
+                                <h5 class="mb-1">${alum.name}</h5>
+                                <p class="mb-1 text-muted">${alum.designation || 'Position'} at ${alum.company || 'Company'}</p>
+                                <p class="mb-0">
+                                    <small class="text-muted">
+                                        <i class="bi bi-mortarboard"></i> ${alum.department} - ${alum.graduationYear}
+                                        <span class="ms-3"><i class="bi bi-geo-alt"></i> ${alum.location || 'Location'}</span>
+                                    </small>
+                                </p>
+                            </div>
+                            <div class="col-auto">
+                                ${alum.isMentor ? '<span class="badge bg-success">Mentor</span>' : ''}
+                                ${alum.isConnected ? '<span class="badge bg-primary">Connected</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function renderPagination(totalPages, currentPage) {
+            const pagination = document.getElementById('alumni-pagination');
+            pagination.innerHTML = '';
+            
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `<a class="page-link" href="#" onclick="loadAlumni(${currentPage - 1})">Previous</a>`;
+            pagination.appendChild(prevLi);
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#" onclick="loadAlumni(${i})">${i}</a>`;
+                pagination.appendChild(li);
+            }
+            
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextLi.innerHTML = `<a class="page-link" href="#" onclick="loadAlumni(${currentPage + 1})">Next</a>`;
+            pagination.appendChild(nextLi);
+        }
+        
+        async function viewProfile(alumniId) {
+            try {
+                const response = await fetch(`/api/users/profile/${alumniId}`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const alumni = await response.json();
+                    document.getElementById('profile-content').innerHTML = `
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img src="${alumni.profilePhoto || '/default-avatar.png'}" class="rounded-circle mb-3" width="150" height="150">
+                                <h4>${alumni.name}</h4>
+                                <p class="text-muted">${alumni.designation} at ${alumni.company}</p>
+                                ${alumni.isMentor ? '<span class="badge bg-success mb-2">Available as Mentor</span>' : ''}
+                            </div>
+                            <div class="col-md-8">
+                                <h5>About</h5>
+                                <p>${alumni.bio || 'No bio available'}</p>
+                                
+                                <h5>Education</h5>
+                                <p>${alumni.department} - Class of ${alumni.graduationYear}</p>
+                                
+                                <h5>Professional Information</h5>
+                                <p><strong>Company:</strong> ${alumni.company}</p>
+                                <p><strong>Location:</strong> ${alumni.location}</p>
+                                <p><strong>Industry:</strong> ${alumni.industry || 'Not specified'}</p>
+                                
+                                <h5>Skills</h5>
+                                <div>
+                                    ${(alumni.skills || []).map(skill => `<span class="badge bg-secondary me-2">${skill}</span>`).join('')}
+                                </div>
+                                
+                                <h5 class="mt-3">Contact</h5>
+                                <p>
+                                    ${alumni.email ? `<i class="bi bi-envelope"></i> ${alumni.email}<br>` : ''}
+                                    ${alumni.linkedin ? `<i class="bi bi-linkedin"></i> <a href="${alumni.linkedin}" target="_blank">LinkedIn Profile</a><br>` : ''}
+                                    ${alumni.phone && alumni.showPhone ? `<i class="bi bi-phone"></i> ${alumni.phone}` : ''}
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Update action buttons
+                    document.getElementById('connect-btn').onclick = () => sendConnectionRequest(alumniId);
+                    document.getElementById('message-btn').onclick = () => sendMessage(alumniId);
+                    
+                    new bootstrap.Modal(document.getElementById('profileModal')).show();
+                }
+            } catch (error) {
+                showAlert('error', 'Failed to load profile');
+            }
+        }
+        
+        async function sendConnectionRequest(alumniId) {
+            try {
+                const response = await fetch(`/api/users/connect/${alumniId}`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    showAlert('success', 'Connection request sent!');
+                    bootstrap.Modal.getInstance(document.getElementById('profileModal')).hide();
+                } else {
+                    showAlert('error', 'Failed to send connection request');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error');
+            }
+        }
+        
+        function sendMessage(alumniId) {
+            // Redirect to messaging page or open message modal
+            window.location.href = `/messages.html?to=${alumniId}`;
+        }
+        
+        function applyFilters() {
+            filters = {
+                search: document.getElementById('search-alumni').value,
+                year: document.getElementById('filter-year').value,
+                department: document.getElementById('filter-department').value,
+                location: document.getElementById('filter-location').value,
+                industry: document.getElementById('filter-industry').value
+            };
+            
+            // Remove empty filters
+            Object.keys(filters).forEach(key => {
+                if (!filters[key]) delete filters[key];
+            });
+            
+            loadAlumni(1);
+        }
+        
+        function clearFilters() {
+            document.getElementById('search-alumni').value = '';
+            document.getElementById('filter-year').value = '';
+            document.getElementById('filter-department').value = '';
+            document.getElementById('filter-location').value = '';
+            document.getElementById('filter-industry').value = '';
+            filters = {};
+            loadAlumni(1);
+        }
+        
+        // Real-time search
+        document.getElementById('search-alumni').addEventListener('input', debounce(applyFilters, 500));
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateYearFilter();
+            loadAlumni();
+            
+            // Sort change
+            document.getElementById('sort-by').addEventListener('change', () => loadAlumni(1));
+        });
+    </script>
+</body>
+</html>

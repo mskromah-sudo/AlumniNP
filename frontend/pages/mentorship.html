@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentorship Program - Alumni Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .mentorship-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .mentorship-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .mentor-filters {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .mentor-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .mentor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: block;
+            object-fit: cover;
+        }
+        
+        .mentor-name {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .mentor-title {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .mentor-expertise {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .expertise-tag {
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #555;
+        }
+        
+        .mentor-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #999;
+        }
+        
+        .mentor-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-request {
+            flex: 1;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-request:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-view {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            color: #667eea;
+            border: 1px solid #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-view:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .become-mentor-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .availability-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .day-slot {
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .day-slot.selected {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-graduation-cap"></i> Alumni Portal
+            </a>
+            <ul class="nav-menu">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="alumni-directory.html">Directory</a></li>
+                <li><a href="job-board.html">Jobs</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="mentorship.html" class="active">Mentorship</a></li>
+                <li><a href="forums.html">Forums</a></li>
+            </ul>
+            <div class="navbar-right">
+                <!-- User menu will be inserted by JavaScript -->
+            </div>
+        </div>
+    </nav>
+
+    <div class="mentorship-container">
+        <!-- Header Section -->
+        <div class="mentorship-header">
+            <h1><i class="fas fa-user-graduate"></i> Mentorship Program</h1>
+            <p>Connect with experienced alumni mentors for career guidance and professional development</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="mentor-filters">
+            <h3>Find a Mentor</h3>
+            <div class="filter-group">
+                <div>
+                    <label for="expertiseFilter">Expertise Area</label>
+                    <select id="expertiseFilter">
+                        <option value="">All Areas</option>
+                        <option value="technology">Technology</option>
+                        <option value="business">Business & Management</option>
+                        <option value="finance">Finance</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="education">Education</option>
+                        <option value="entrepreneurship">Entrepreneurship</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="industryFilter">Industry</label>
+                    <select id="industryFilter">
+                        <option value="">All Industries</option>
+                        <option value="it">IT & Software</option>
+                        <option value="banking">Banking & Finance</option>
+                        <option value="consulting">Consulting</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="retail">Retail</option>
+                        <option value="startup">Startup</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="experienceFilter">Years of Experience</label>
+                    <select id="experienceFilter">
+                        <option value="">Any Experience</option>
+                        <option value="0-5">0-5 years</option>
+                        <option value="5-10">5-10 years</option>
+                        <option value="10-15">10-15 years</option>
+                        <option value="15+">15+ years</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="availabilityFilter">Availability</label>
+                    <select id="availabilityFilter">
+                        <option value="">Any</option>
+                        <option value="available">Available Now</option>
+                        <option value="busy">Currently Busy</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mentors Grid -->
+        <div class="mentor-grid" id="mentorGrid">
+            <!-- Mentor cards will be dynamically loaded here -->
+        </div>
+
+        <!-- Become a Mentor Section -->
+        <div class="become-mentor-section">
+            <h2>Share Your Experience</h2>
+            <p>Become a mentor and help guide the next generation of professionals</p>
+            <button class="btn btn-white" onclick="openBecomeMentorModal()">
+                <i class="fas fa-plus-circle"></i> Become a Mentor
+            </button>
+        </div>
+    </div>
+
+    <!-- Request Mentorship Modal -->
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('requestModal')">&times;</span>
+            <h2>Request Mentorship</h2>
+            <form id="requestMentorshipForm" data-endpoint="/mentorship/request" data-method="POST">
+                <input type="hidden" id="mentorId" name="mentorId">
+                
+                <div class="form-group">
+                    <label>Selected Mentor</label>
+                    <input type="text" id="selectedMentor" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="purpose">Purpose of Mentorship</label>
+                    <select name="purpose" required>
+                        <option value="">Select Purpose</option>
+                        <option value="career_guidance">Career Guidance</option>
+                        <option value="skill_development">Skill Development</option>
+                        <option value="interview_prep">Interview Preparation</option>
+                        <option value="entrepreneurship">Entrepreneurship</option>
+                        <option value="higher_studies">Higher Studies</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="goals">Specific Goals</label>
+                    <textarea name="goals" placeholder="What do you hope to achieve through this mentorship?" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="preferredMode">Preferred Mode</label>
+                    <select name="preferredMode" required>
+                        <option value="online">Online (Video Call)</option>
+                        <option value="in_person">In Person</option>
+                        <option value="email">Email/Chat</option>
+                        <option value="flexible">Flexible</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="frequency">Meeting Frequency</label>
+                    <select name="frequency" required>
+                        <option value="weekly">Weekly</option>
+                        <option value="biweekly">Bi-weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="as_needed">As Needed</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message to Mentor</label>
+                    <textarea name="message" placeholder="Introduce yourself and explain why you chose this mentor" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Become a Mentor Modal -->
+    <div id="becomeMentorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('becomeMentorModal')">&times;</span>
+            <h2>Become a Mentor</h2>
+            <form id="becomeMentorForm" data-endpoint="/mentorship/register" data-method="POST">
+                <div class="form-group">
+                    <label for="expertise">Areas of Expertise (Select multiple)</label>
+                    <select name="expertise" multiple required>
+                        <option value="technology">Technology</option>
+                        <option value="business">Business & Management</option>
+                        <option value="finance">Finance</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="education">Education</option>
+                        <option value="entrepreneurship">Entrepreneurship</option>
+                        <option value="research">Research</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="yearsExperience">Years of Professional Experience</label>
+                    <input type="number" name="yearsExperience" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="currentRole">Current Role/Position</label>
+                    <input type="text" name="currentRole" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Current Company</label>
+                    <input type="text" name="company" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Mentor Bio</label>
+                    <textarea name="bio" placeholder="Brief introduction about yourself and what you can offer as a mentor" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mentorshipMode">Preferred Mentorship Mode</label>
+                    <select name="mentorshipMode" required>
+                        <option value="one_on_one">One-on-One</option>
+                        <option value="group">Group Sessions</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="availability">Weekly Availability (hours)</label>
+                    <input type="number" name="availability" min="1" max="20" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="maxMentees">Maximum Number of Mentees</label>
+                    <input type="number" name="maxMentees" min="1" max="10" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="languages">Languages</label>
+                    <input type="text" name="languages" placeholder="e.g., English, Hindi, Tamil" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Available Days</label>
+                    <div class="availability-grid">
+                        <div class="day-slot" data-day="monday">Mon</div>
+                        <div class="day-slot" data-day="tuesday">Tue</div>
+                        <div class="day-slot" data-day="wednesday">Wed</div>
+                        <div class="day-slot" data-day="thursday">Thu</div>
+                        <div class="day-slot" data-day="friday">Fri</div>
+                        <div class="day-slot" data-day="saturday">Sat</div>
+                        <div class="day-slot" data-day="sunday">Sun</div>
+                    </div>
+                    <input type="hidden" name="availableDays" id="availableDays">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Register as Mentor</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        // Load mentors on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMentors();
+            initializeMentorshipPage();
+        });
+
+        // Initialize mentorship page
+        function initializeMentorshipPage() {
+            // Add event listeners to filters
+            document.getElementById('expertiseFilter').addEventListener('change', loadMentors);
+            document.getElementById('industryFilter').addEventListener('change', loadMentors);
+            document.getElementById('experienceFilter').addEventListener('change', loadMentors);
+            document.getElementById('availabilityFilter').addEventListener('change', loadMentors);
+            
+            // Day selection for mentor registration
+            document.querySelectorAll('.day-slot').forEach(slot => {
+                slot.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    updateAvailableDays();
+                });
+            });
+        }
+
+        // Load mentors
+        async function loadMentors() {
+            const filters = {
+                expertise: document.getElementById('expertiseFilter').value,
+                industry: document.getElementById('industryFilter').value,
+                experience: document.getElementById('experienceFilter').value,
+                availability: document.getElementById('availabilityFilter').value
+            };
+            
+            try {
+                const token = localStorage.getItem('token');
+                const queryString = new URLSearchParams(filters).toString();
+                
+                const response = await fetch(`${alumniPortal.API_URL}/mentorship/mentors?${queryString}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const mentors = await response.json();
+                displayMentors(mentors);
+            } catch (error) {
+                console.error('Error loading mentors:', error);
+            }
+        }
+
+        // Display mentors
+        function displayMentors(mentors) {
+            const mentorGrid = document.getElementById('mentorGrid');
+            
+            if (mentors.length === 0) {
+                mentorGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No mentors found matching your criteria.</p>';
+                return;
+            }
+            
+            mentorGrid.innerHTML = mentors.map(mentor => `
+                <div class="mentor-card">
+                    <img src="${mentor.profilePic || 'assets/default-avatar.png'}" alt="${mentor.name}" class="mentor-avatar">
+                    <div class="mentor-name">${mentor.name}</div>
+                    <div class="mentor-title">${mentor.currentRole} at ${mentor.company}</div>
+                    
+                    <div class="mentor-expertise">
+                        ${mentor.expertise.map(exp => `<span class="expertise-tag">${exp}</span>`).join('')}
+                    </div>
+                    
+                    <div class="mentor-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">${mentor.yearsExperience}</span>
+                            <span class="stat-label">Years Exp.</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${mentor.mentees || 0}</span>
+                            <span class="stat-label">Mentees</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">${mentor.rating || 5.0}</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mentor-actions">
+                        <button class="btn-request" onclick="requestMentorship('${mentor._id}', '${mentor.name}')">
+                            Request
+                        </button>
+                        <button class="btn-view" onclick="viewMentorProfile('${mentor._id}')">
+                            View Profile
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Request mentorship
+        function requestMentorship(mentorId, mentorName) {
+            document.getElementById('mentorId').value = mentorId;
+            document.getElementById('selectedMentor').value = mentorName;
+            document.getElementById('requestModal').style.display = 'block';
+        }
+
+        // View mentor profile
+        function viewMentorProfile(mentorId) {
+            window.location.href = `profile.html?id=${mentorId}&type=mentor`;
+        }
+
+        // Open become mentor modal
+        function openBecomeMentorModal() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.role === 'student') {
+                alumniPortal.showNotification('Info', 'Only alumni can register as mentors', 'info');
+                return;
+            }
+            document.getElementById('becomeMentorModal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Update available days
+        function updateAvailableDays() {
+            const selectedDays = [];
+            document.querySelectorAll('.day-slot.selected').forEach(slot => {
+                selectedDays.push(slot.dataset.day);
+            });
+            document.getElementById('availableDays').value = selectedDays.join(',');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

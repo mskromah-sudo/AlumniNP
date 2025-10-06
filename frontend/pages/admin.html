@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Alumni Portal</title>
+    
+    <!-- Relative path to main stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Relative path to dashboard-specific stylesheet -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    
+    <!-- Optional: Link to an icon library like Font Awesome for a better UI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="admin-container">
+        <!-- Sidebar Navigation for Admin Panel -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Alumni Portal</h2>
+                <h3>Admin Panel</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <!-- JavaScript will be used to toggle active state and content visibility -->
+                    <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#user-management"><i class="fas fa-users-cog"></i> Manage Users</a></li>
+                    <li><a href="#event-management"><i class="fas fa-calendar-alt"></i> Manage Events</a></li>
+                    <li><a href="#job-management"><i class="fas fa-briefcase"></i> Manage Jobs</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Welcome, Admin!</h1>
+                <p>Manage users, content, and settings from this central hub.</p>
+            </header>
+
+            <!-- Dashboard Overview Section -->
+            <section id="dashboard" class="content-section">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-cards">
+                    <div class="card">
+                        <i class="fas fa-users"></i>
+                        <div class="card-info">
+                            <h4>Total Alumni</h4>
+                            <p>1,250</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-user-plus"></i>
+                        <div class="card-info">
+                            <h4>Pending Registrations</h4>
+                            <p>15</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-calendar-check"></i>
+                        <div class="card-info">
+                            <h4>Upcoming Events</h4>
+                            <p>4</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-briefcase"></i>
+                        <div class="card-info">
+                            <h4>Open Job Postings</h4>
+                            <p>32</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Management Section -->
+            <section id="user-management" class="content-section" style="display:none;">
+                <h2>Manage Users</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Graduation Year</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jane Doe</td>
+                                <td>jane.doe@example.com</td>
+                                <td>2018</td>
+                                <td><span class="status-approved">Approved</span></td>
+                                <td>
+                                    <button class="btn btn-sm">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Smith</td>
+                                <td>john.smith@example.com</td>
+                                <td>2020</td>
+                                <td><span class="status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-success">Approve</button>
+                                    <button class="btn btn-sm btn-danger">Reject</button>
+                                </td>
+                            </tr>
+                            <!-- More user rows would be dynamically populated by the backend -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Event Management Section -->
+            <section id="event-management" class="content-section" style="display:none;">
+                <h2>Manage Events</h2>
+                <button class="btn btn-primary">Create New Event</button>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Event Title</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Attendees</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Annual Alumni Gala</td>
+                                <td>2024-12-15</td>
+                                <td>Grand Ballroom</td>
+                                <td>250</td>
+                                <td>
+                                    <button class="btn btn-sm">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tech Networking Night</td>
+                                <td>2024-11-20</td>
+                                <td>Virtual / Zoom</td>
+                                <td>120</td>
+                                <td>
+                                    <button class="btn btn-sm">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- More event rows would be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Job Management Section -->
+            <section id="job-management" class="content-section" style="display:none;">
+                <h2>Manage Job Postings</h2>
+                 <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Company</th>
+                                <th>Posted By</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Senior Frontend Developer</td>
+                                <td>Tech Solutions Inc.</td>
+                                <td>Mark Johnson ('15)</td>
+                                <td><span class="status-approved">Approved</span></td>
+                                <td>
+                                    <button class="btn btn-sm">View</button>
+                                    <button class="btn btn-sm btn-danger">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Marketing Intern</td>
+                                <td>Creative Co.</td>
+                                <td>Sarah Lee ('22)</td>
+                                <td><span class="status-pending">Pending Approval</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-success">Approve</button>
+                                    <button class="btn btn-sm btn-danger">Reject</button>
+                                </td>
+                            </tr>
+                            <!-- More job rows would be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Settings Section -->
+            <section id="settings" class="content-section" style="display:none;">
+                <h2>Portal Settings</h2>
+                <form class="settings-form">
+                    <div class="form-group">
+                        <label for="portal-name">Portal Name</label>
+                        <input type="text" id="portal-name" value="My University Alumni Portal">
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-email">Admin Contact Email</label>
+                        <input type="email" id="admin-email" value="admin@university.edu">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="require-approval" checked>
+                            New user registrations require admin approval.
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                </form>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- 
+        The dashboard.js file is expected to handle the logic for switching between
+        the content sections when the sidebar navigation links are clicked.
+    -->
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
